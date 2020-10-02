@@ -32,6 +32,7 @@ class Problem(models.Model):
         'Professor',
         on_delete=models.SET_NULL,
     )
+    date_posted = models.DateTimeField()
     date_solved = models.DateTimeField()
     # course_content contains all the course content of a problem
     # the JSON is a list of basic elements that includes type and data
