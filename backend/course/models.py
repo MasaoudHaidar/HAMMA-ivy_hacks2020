@@ -7,23 +7,19 @@ from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
 class Professor(models.Model):
-    full_name = models.CharField()
+    full_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.full_name
 
 class Company(models.Model):
-    full_name = models.CharField()
+    full_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.full_name
 
-class Image(models.Mode):
-    image = models.ImageField()
-    # caption = models.TextField(blank=True)
-
 class Problem(models.Model):
-    brief_problem_statement = models.CharField()
+    brief_problem_statement = models.CharField(max_length=500)
     company = models.ForeignKey(
         'Company',
         on_delete=models.CASCADE,
@@ -31,6 +27,7 @@ class Problem(models.Model):
     professor = models.ForeignKey(
         'Professor',
         on_delete=models.SET_NULL,
+        null=True,
     )
     date_posted = models.DateTimeField()
     date_solved = models.DateTimeField()
