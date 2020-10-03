@@ -6,4 +6,5 @@ def detail(request, course_id, slug):
     return HttpResponseNotFound('<h1>Page not created yet</h1>')
 
 def add_problem(request):
-    return HttpResponseNotFound('<h1>Page not created yet</h1>')
+    return render(request, 'course/add_problem.html')
+    # return HttpResponseNotFound('<h1>Page not created yet</h1>')
