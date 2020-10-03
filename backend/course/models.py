@@ -31,7 +31,7 @@ class Problem(models.Model):
         null=True,
     )
     date_posted = models.DateTimeField()
-    date_solved = models.DateTimeField()
+    date_solved = models.DateTimeField(null=True)
     # course_content contains all the course content of a problem
     # the JSON is a list of basic elements that includes type and data
     # sample content: {[
