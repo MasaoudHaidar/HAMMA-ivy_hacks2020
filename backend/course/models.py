@@ -19,7 +19,8 @@ class Company(models.Model):
         return self.full_name
 
 class Problem(models.Model):
-    brief_problem_statement = models.CharField(max_length=500)
+    title = models.CharField(max_length=10000)
+    description = models.CharField(max_length=10000)
     company = models.ForeignKey(
         'Company',
         on_delete=models.CASCADE,

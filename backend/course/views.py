@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
 
+from .models import Problem
+
 problems = [
     {
         'title': '1',
@@ -22,6 +24,6 @@ def add_problem(request):
 
 def index(request):
     context = {
-        'problems': problems
+        'problems': Problem.objects.all()
     }
     return render(request, 'course/index.html', context)
