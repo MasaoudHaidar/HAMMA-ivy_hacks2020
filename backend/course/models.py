@@ -5,30 +5,14 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
+import users.models
+
 # Create your models here.
-class Professor(models.Model):
-    full_name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.full_name
-
-class Company(models.Model):
-    full_name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.full_name
-
-class Student(models.Model):
-    full_name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.full_name
-
 class Problem(models.Model):
     title = models.CharField(max_length=10000)
     description = models.CharField(max_length=10000)
     company = models.ForeignKey(
-        'Company',
+        users.models.Company,
         on_delete=models.CASCADE,
     )
     date_posted = models.DateTimeField()
@@ -48,9 +32,8 @@ class Solution(models.Model):
     date_solved = models.DateTimeField()
     problem = models.ForeignKey('Problem', on_delete=models.CASCADE)
     professor = models.ForeignKey(
-        'Professor',
-        on_delete=models.SET_NULL,
-        null=True,
+        users.models.Professor,
+        on_delete=models.CASCADE,
     )
     video_url = models.URLField(null=True)
     solution_text = models.TextField()
@@ -60,7 +43,7 @@ class Solution(models.Model):
 
 class Discussion(models.Model):
     problem = models.ForeignKey('Problem', on_delete=models.CASCADE)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    student = models.ForeignKey(users.models.Student, on_delete=models.CASCADE)
     comment = models.TextField()
 
     def __str__(self):

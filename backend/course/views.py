@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Company, Discussion, Professor, Problem, Solution, Student
+from .models import *
+from users.models import Company, Student, Professor
 
 problems = [
     {

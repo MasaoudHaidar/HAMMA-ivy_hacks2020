@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 
-from .models import StudentUser
+from .models import *
 
 def signup(request):
     if request.method == 'POST':
@@ -13,10 +13,10 @@ def signup(request):
             # get role from form and create corresponding account
             role = form.cleaned_data.get('role')
             if role == UserRegisterForm.STUDENT:
-                # student_user = StudentUser(
-                #     user=
-                # )
-                pass
+                student_user = StudentUser(
+                    user=User.objects.get(username=username),
+                )
+                student_user.save()
             messages.success(request, f'Account created for {username}!')
             return redirect('course:index')
     else:
