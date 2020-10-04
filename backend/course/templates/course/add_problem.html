@@ -1,23 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .myinput{
+        width: 100%;
+    }
+    .big_box{
+        resize: vertical;
+    }
+    $('textarea').autoResize();
+</style>
 
-<div class="w3-row-padding" style="margin-bottom: 320px">
+<div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
   <div class="w3-col m12">
-    <div class="w3-card w3-round w3-white">
-      <div class="w3-container w3-padding">
+    <div class="w3-card w3-round w3-white ">
+      <div class="w3-container w3-padding ">
         <h6 class="">Describe a Technical Problem that your employees face in their day-to-day job.</h6>
 
         <form action="{% url 'course:process_add_problem' %}", method="post">
           {% csrf_token %}
-          <label for="problem-title"> Problem Title: </label><br>
-          <input type="text" class="w3-border w3-padding" id="problem-title" name="problem-title"><br>
-
+          <label for="problem-title"> Problem Title: </label>
+          <input type="text" class="w3-border w3-padding myinput" id="problem-title" name="problem-title"><br>
           <label for="problem-description"> Problem Description: </label><br>
-          <input type="text" class="w3-border w3-padding" id="problem-description" name="problem-description"><br>
+            <textarea type="text" class="w3-border w3-padding myinput big_box" id="problem-description" name="problem-description" placeholder="Problem Description" rows=6></textarea>
+              <br>
 
           <label for="company-name"> Company Name: </label><br>
-          <input type="text" class="w3-border w3-padding" id="company-name" name="company-name"><br><br>
+          <input type="text" class="w3-border w3-padding myinput" id="company-name" name="company-name"><br><br>
           <!-- <p contenteditable="true" class="w3-border w3-padding">Problem Title </p>
           <p contenteditable="true" class="w3-border w3-padding">Describe The Problem <br><br><br><br> </p>
           <p contenteditable="true" class="w3-border w3-padding">Technical Pre-requists</p> -->
