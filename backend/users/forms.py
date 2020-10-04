@@ -4,12 +4,17 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserRegisterForm(UserCreationForm):
-    name = forms.EmailField()
+    full_name = forms.CharField(max_length=100)
     email = forms.EmailField()
-    role = forms.ChoiceField(choices = ((1, "Student"),
-    (2, "Company"),
-    (3, "Professor")))
+    STUDENT = 'ST'
+    COMPANY = 'COM'
+    PROFESSOR = 'PROF'
+    role = forms.ChoiceField(choices=[
+        (STUDENT, "Student"),
+        (COMPANY, "Company"),
+        (PROFESSOR, "Professor")
+    ])
 
     class Meta:
-        model = models.CustomUser
-        fields = ['username', 'email', 'password1', 'password2']
+        model = models.User
+        fields = ['full_name', 'username', 'email', 'password1', 'password2', 'role']

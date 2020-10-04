@@ -2,11 +2,20 @@
 
 {% block content %}
 
- <form method="POST">
+  <div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
 
-   {{ form }}
+    <form method="POST">
+      {% csrf_token %}
 
- <button class="btn btn-outline-info" type="submit">Sign Up</button>
-  </form>
+      <fieldset>
 
+        {{ form.as_p }}
+
+      </fieldset>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    Already Have An Account? <a href="#">Sign In</a>
+
+  </div>
 {% endblock content %}

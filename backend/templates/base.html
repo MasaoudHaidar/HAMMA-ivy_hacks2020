@@ -61,6 +61,11 @@
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
 <div class="w3-main" style="margin-left:250px">
 
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }} <!-- TODO: make this message look better -->
+    {% endfor %}
+  {% endif %}
   {% block content %}{% endblock %}
 
   <footer id="myFooter">
