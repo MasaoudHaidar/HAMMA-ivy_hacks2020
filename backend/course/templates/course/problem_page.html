@@ -40,7 +40,7 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container w3-padding">
             <div style="display: block">
-                <form action="{% url 'course:process_add_comment' %}", method="post">
+                <form action="{% url 'course:process_add_comment' problem.id %}" method="post">
                     {% csrf_token %}
                     <label for="comment"> <h4> Add a comment: </h4> </label>
                     <textarea type="text" class="w3-border w3-padding myinput big_box" id="comment" name="comment" placeholder="Add a comment" rows=6></textarea>
@@ -51,7 +51,7 @@
                     <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
                 </form>
             </div>
-        
+
 
             {% for discussion in discussions %}
                 <div>
@@ -73,9 +73,9 @@
           <div class="w3-col m12">
             <div class="w3-card w3-round w3-white">
               <div class="w3-container w3-padding">
-                  
+
                     <div style="display: block">
-                        <form action="{% url 'course:process_add_solution' %}", method="post">
+                        <form action="{% url 'course:process_add_solution' problem.id %}" method="post">
                             {% csrf_token %}
                             <h4 > Add a solution: </h4>
                             <label for="solution-video"> Provide a Video url: </label><br>
@@ -88,7 +88,7 @@
                             <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
                         </form>
                     </div>
-                  
+
                     {% for solution in solutions %}
                     <div>
                         <hr>
