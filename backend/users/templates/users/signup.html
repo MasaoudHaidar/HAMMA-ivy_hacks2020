@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-  <div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
+    
+  <!--<div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
 
     <form method="POST">
       {% csrf_token %}
@@ -16,6 +16,50 @@
     </form>
 
     Already Have An Account? <a href="{% url 'users:login' %}">Sign In</a>
+
+  </div>-->
+
+    <div class="w3-row-padding w3-padding-64" style="width: 50%;margin-left: 50px;display:block;
+        margin:0px auto;margin-bottom: 200px;margin-top: 20px">
+
+    <form method="POST" >
+      {% csrf_token %}
+
+      <fieldset style=" border-radius: 10px; padding: 50px;">
+
+        <!--{{ form.as_p }}-->
+          
+        
+        <h3 style="text-align: center">Register</h3>  
+        {% for field in form %}
+            <div class="input-group">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-user"></span></span>
+                {% if field.html_name == "password1" or field.html_name == "password2" %}
+                    <input class="form-control myinput_auth w3-border w3-padding" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{field.html_name}}" type="password" />
+                    {{ field.errors }}
+                {% elif field.html_name == "role" %}
+                    <select class="form-control w3-border w3-padding myinput_auth" id="{{ field.id_for_label }}" name="{{ field.html_name }}" >
+                        <optgroup label="Account Type:">
+                            <option value="PROF">Professor</option>
+                            <option value="COM">Company</option>
+                            <option value="ST">Student</option>
+                        </optgroup>
+                    </select>
+                    {{ field.errors }}
+                {% else %}
+                    <input class="form-control myinput_auth w3-border w3-padding" id="{{ field.id_for_label }}" maxlength="50" name="{{ field.html_name }}" placeholder="{{field.html_name}}" type="text" />
+                    {{ field.errors }}
+                {% endif %}
+                
+            </div>
+        {% endfor %}
+        <button type="submit" class="w3-button w3-theme myinput_auth">Register</button>  
+        
+      </fieldset>
+      
+    </form>
+
+     Already Have An Account? <a href="{% url 'users:login' %}">Sign In</a>
 
   </div>
 {% endblock content %}

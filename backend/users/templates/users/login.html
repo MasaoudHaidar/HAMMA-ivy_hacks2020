@@ -2,17 +2,35 @@
 
 {% block content %}
 
-  <div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
+  <div class="w3-row-padding w3-padding-64" style="width: 50%;margin-left: 50px;display:block;
+        margin:0px auto;margin-bottom: 200px;margin-top: 50px">
 
-    <form method="POST">
+    <form method="POST" >
       {% csrf_token %}
 
-      <fieldset>
+      <fieldset style=" border-radius: 10px; padding: 50px;">
 
-        {{ form.as_p }}
-
+        <!--{{ form.as_p }}-->
+          
+        
+        <h3 style="text-align: center">Login</h3>  
+        {% for field in form %}
+            <div class="input-group">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-user"></span></span>
+                {% if field.html_name == "password" %}
+                    <input class="form-control myinput_auth w3-border w3-padding" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{field.html_name}}" type="password" />
+                    {{ field.errors }}
+                {% else %}
+                    <input class="form-control myinput_auth w3-border w3-padding" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{field.html_name}}" type="text" />
+                    {{ field.errors }}
+                {% endif %}
+                
+            </div>
+        {% endfor %}
+        <button type="submit" class="w3-button w3-theme myinput_auth">Sign In</button>  
+        
       </fieldset>
-      <button type="submit">Sign In</button>
+      
     </form>
 
     Don't Have An Account? <a href="{% url 'users:signup' %}">Sign Up</a>
