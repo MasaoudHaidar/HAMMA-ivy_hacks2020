@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -31,24 +32,21 @@ def detail(request, course_id):
     }
     return render(request, 'course/problem_page.html', context)
 
+@login_required
 def add_problem(request):
-    return render(request, 'course/add_problem.html')
-    # return HttpResponseNotFound('<h1>Page not created yet</h1>')
-
-def process_add_problem(request):
-    # get company or create a new one
-    company_obj, company_created = Company.objects.get_or_create(full_name__iexact=request.POST['company-name'])
-    if company_created:
-        company_obj.full_name = request.POST['company-name']
-        company_obj.save()
-    p = Problem(
-        title=request.POST['problem-title'],
-        description=request.POST['problem-description'],
-        company=company_obj,
-        date_posted=timezone.now(),
-    )
-    p.save()
-    return HttpResponseRedirect(reverse('course:index'))
+    if request.method == 'POST':
+        company_set = Company.objects.filter(user=request.user)
+        if company_set.exists():
+            p = Problem(
+                title=request.POST['problem-title'],
+                description=request.POST['problem-description'],
+                company=company_set.first(),
+                date_posted=timezone.now(),
+            )
+            p.save()
+            return HttpResponseRedirect(reverse('course:index'))
+    else:
+        return render(request, 'course/add_problem.html')
 
 def process_add_comment(request, problem_id):
     p = get_object_or_404(Problem, pk=problem_id)
