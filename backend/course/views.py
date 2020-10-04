@@ -43,7 +43,6 @@ def process_add_problem(request):
         description=request.POST['problem-description'],
         company=company_obj,
         date_posted=timezone.now(),
-        course_content={}
     )
     p.save()
     return HttpResponseRedirect(reverse('course:index'))
