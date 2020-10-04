@@ -43,7 +43,7 @@
                 {% if is_student %}
                 <form action="{% url 'course:process_add_comment' problem.id %}" method="post">
                     {% csrf_token %}
-                    <label for="comment"> <h4> Add a Comment: </h4>  </label>
+                    <label for="comment"> <h4> Add a Comment. What do you think the solution would look like? </h4>  </label>
                     <textarea type="text" class="w3-border w3-padding myinput big_box" id="comment" name="comment" placeholder="Add a comment" rows=6></textarea>
                     <!-- <p contenteditable="true" class="w3-border w3-padding">Problem Title </p>
                     <p contenteditable="true" class="w3-border w3-padding">Describe The Problem <br><br><br><br> </p>
