@@ -12,4 +12,6 @@ class UserAdmin(BaseUserAdmin):
     inline = (StudentsInline, )
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Company)
+admin.site.register(Professor)
 admin.site.register(Student)
