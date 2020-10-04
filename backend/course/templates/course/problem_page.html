@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block custom_head %}
 
 {% endblock %}
@@ -13,7 +15,7 @@
     <div class="w3-col m12">
       <div class="w3-card w3-round w3-white">
         <div class="w3-container w3-padding">
-            <img src="avatar-1577909_960_720.webp" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+            <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
             <span class="w3-right w3-opacity">1 min</span>
             <p>{{ problem.company.full_name }}</p><br>
             <h1 class="w3-text-teal">{{ problem.title }}</h1>
@@ -46,7 +48,7 @@
         <div class="w3-card w3-round w3-white">
           <div class="w3-container w3-padding">
             <div>
-              <img src="avatar-1577909_960_720.webp" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+              <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
               <span class="w3-right w3-opacity">1 min</span>
               <p>{{ discussion.student.full_name }}</p>
               <br>
@@ -66,7 +68,7 @@
           <div class="w3-container w3-padding">
 
             <div>
-              <img src="avatar-1577909_960_720.webp" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+              <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
               <span class="w3-right w3-opacity">1 min</span>
               <p>{{ solution.professor.full_name }}</p>
               <br>
