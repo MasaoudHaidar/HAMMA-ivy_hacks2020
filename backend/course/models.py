@@ -41,6 +41,8 @@ class Problem(models.Model):
     #     {"type": "image", "url": "https://example.com/link_to_image"}
     # ]}
     # course_content = models.JSONField()
+    def __str__(self):
+        return self.title
 
 class Solution(models.Model):
     date_solved = models.DateTimeField()
@@ -53,7 +55,13 @@ class Solution(models.Model):
     video_url = models.URLField(null=True)
     solution_text = models.TextField()
 
+    def __str__(self):
+        return self.problem.title + '/' + self.professor.full_name
+
 class Discussion(models.Model):
     problem = models.ForeignKey('Problem', on_delete=models.CASCADE)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     comment = models.TextField()
+
+    def __str__(self):
+        return self.problem.title + '/' + self.student.full_name + '/' + self.comment
