@@ -10,5 +10,7 @@ urlpatterns = [
     path('<int:course_id>', views.detail, name='detail'),
     # e.g., /courses/add_problem/
     path('add_problem/', views.add_problem, name='add_problem'),
-    path('process_add_problem/', views.process_add_problem, name='process_add_problem')
+    path('process_add_problem/', views.process_add_problem, name='process_add_problem'),
+    path('process_add_comment/', views.process_add_comment, name='process_add_comment'),
+    path('process_add_solution/', views.process_add_solution, name='process_add_solution'),
 ]
