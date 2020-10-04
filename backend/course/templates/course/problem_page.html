@@ -40,9 +40,11 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container w3-padding">
             <div style="display: block">
+
+                {% if is_student %}
                 <form action="{% url 'course:process_add_comment' problem.id %}" method="post">
                     {% csrf_token %}
-                    <label for="comment"> <h4> Add a comment: </h4> </label>
+                    <label for="comment"> <h4> Add a Comment: </h4>  </label>
                     <textarea type="text" class="w3-border w3-padding myinput big_box" id="comment" name="comment" placeholder="Add a comment" rows=6></textarea>
                     <!-- <p contenteditable="true" class="w3-border w3-padding">Problem Title </p>
                     <p contenteditable="true" class="w3-border w3-padding">Describe The Problem <br><br><br><br> </p>
@@ -50,6 +52,8 @@
                     <br>
                     <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
                 </form>
+                {% endif %}
+                <h4> Student Comments: </h4>
             </div>
 
 
@@ -75,6 +79,7 @@
               <div class="w3-container w3-padding">
 
                     <div style="display: block">
+                        {%if is_professor%}
                         <form action="{% url 'course:process_add_solution' problem.id %}" method="post">
                             {% csrf_token %}
                             <h4 > Add a solution: </h4>
@@ -87,6 +92,8 @@
                             <p contenteditable="true" class="w3-border w3-padding">Technical Pre-requists</p> -->
                             <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
                         </form>
+                        {%endif%}
+                        <h4 > Solutions: </h4>
                     </div>
 
                     {% for solution in solutions %}
