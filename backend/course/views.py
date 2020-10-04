@@ -31,6 +31,14 @@ def detail(request, course_id):
         # 'show_discussions': show_discussions,
         'solutions': solutions,
     }
+    if request.user.is_authenticated:
+        user = request.user
+        if Company.objects.filter(user=request.user).exists():
+            context["is_company"] = True
+        if Student.objects.filter(user=request.user).exists():
+            context["is_student"] = True
+        if Professor.objects.filter(user=request.user).exists():
+            context["is_professor"] = True
     return render(request, 'course/problem_page.html', context)
 
 @login_required
@@ -76,5 +84,6 @@ def process_add_solution(request, problem_id):
 def index(request):
     context = {
         'problems': Problem.objects.all()
+
     }
     return render(request, 'course/index.html', context)
