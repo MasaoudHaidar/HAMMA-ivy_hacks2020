@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
+    <h2> You have been logged out! </h2>
+    <a href="{% url 'users:login' %}">Sign In</a>
+  </div>
+{% endblock content %}

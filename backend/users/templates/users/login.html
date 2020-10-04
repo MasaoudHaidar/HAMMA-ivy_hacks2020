@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="w3-row-padding w3-padding-64" style="margin-bottom: 320px; ">
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <fieldset>
+
+        {{ form.as_p }}
+
+      </fieldset>
+      <button type="submit">Sign In</button>
+    </form>
+
+    Don't Have An Account? <a href="{% url 'users:signup' %}">Sign Up</a>
+
+  </div>
+{% endblock content %}

@@ -18,10 +18,10 @@ def signup(request):
                 )
                 student_user.save()
             messages.success(request, f'Account created for {username}!')
-            return redirect('course:index')
+            return redirect('users:login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/signup.html', {'form': form})
 
 def login():
-    pass
+    return render(request, 'users/login.html')
