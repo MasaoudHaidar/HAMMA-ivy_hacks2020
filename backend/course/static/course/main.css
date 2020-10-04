@@ -1,1 +1,7 @@
 #Write code here
+.myinput{
+    width: 100%;
+}
+.big_box{
+    resize: vertical;
+}

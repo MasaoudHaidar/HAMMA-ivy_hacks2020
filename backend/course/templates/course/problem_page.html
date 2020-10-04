@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block custom_head %}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% static 'course/avatar-1577909_960_720.webp' %}
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div class="w3-main" style="margin-left:50px;margin-top: 100px">
+
+  <div class="w3-row-padding" style="margin-bottom: 50px">
+    <div class="w3-col m12">
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container w3-padding">
+            <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+            <span class="w3-right w3-opacity">1 min</span>
+            <p>{{ problem.company.full_name }}</p><br>
+            <h1 class="w3-text-teal">{{ problem.title }}</h1>
+            <p> {{ problem.description }}
+                <br>
+            </p>
+            <pre> <a href="#">#Tag1</a>  <a href="#">#Tag2</a>  <a href="#">#Tag3</a> </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-row-padding" style="margin-bottom: 50px">
+    <div class="w3-col m12">
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container w3-padding">
+            <div style="display: block">
+                <form action="{% url 'course:process_add_comment' %}", method="post">
+                    {% csrf_token %}
+                    <label for="comment"> <h4> Add a comment: </h4> </label>
+                    <textarea type="text" class="w3-border w3-padding myinput big_box" id="comment" name="comment" placeholder="Add a comment" rows=6></textarea>
+                    <!-- <p contenteditable="true" class="w3-border w3-padding">Problem Title </p>
+                    <p contenteditable="true" class="w3-border w3-padding">Describe The Problem <br><br><br><br> </p>
+                    <p contenteditable="true" class="w3-border w3-padding">Technical Pre-requists</p> -->
+                    <br>
+                    <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+                </form>
+            </div>
+        
+
+            {% for discussion in discussions %}
+                <div>
+                    <hr>
+                    <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                    <span class="w3-right w3-opacity">1 min</span>
+                    <p>{{ discussion.student.full_name }}</p>
+                    <br>
+                    <p>{{ discussion.comment }}</p>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div style="display: block">
+        <div class="w3-row-padding" style="margin-bottom: 50px">
+          <div class="w3-col m12">
+            <div class="w3-card w3-round w3-white">
+              <div class="w3-container w3-padding">
+                  
+                    <div style="display: block">
+                        <form action="{% url 'course:process_add_solution' %}", method="post">
+                            {% csrf_token %}
+                            <h4 > Add a solution: </h4>
+                            <label for="solution-video"> Provide a Video url: </label><br>
+                            <input type="text" class="w3-border w3-padding myinput" id="solution-video" name="solution-video"><br>
+                            <label for="solution-text"> Describe the solution and reference any relevant online courses: </label><br>
+                            <textarea type="text" class="w3-border w3-padding myinput big_box" id="solution-text" name="solution-text" placeholder="Problem Description" rows=6></textarea>
+                            <!-- <p contenteditable="true" class="w3-border w3-padding">Problem Title </p>
+                            <p contenteditable="true" class="w3-border w3-padding">Describe The Problem <br><br><br><br> </p>
+                            <p contenteditable="true" class="w3-border w3-padding">Technical Pre-requists</p> -->
+                            <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+                        </form>
+                    </div>
+                  
+                    {% for solution in solutions %}
+                    <div>
+                        <hr>
+                        <img src="{% static 'course/avatar-1577909_960_720.webp' %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                        <span class="w3-right w3-opacity">1 min</span>
+                        <p>{{ solution.professor.full_name }}</p>
+                        <br>
+                        {% if solution.video_url %}
+                          <iframe width="420" height="315"
+                            src="{{ solution.video_url }}">
+                          </iframe>
+                        {% endif %}
+                        <p>
+                            {{ solution.solution_text }}
+                        </p>
+                    </div>
+                    {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}

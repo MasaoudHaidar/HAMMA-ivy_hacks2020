@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Company, Professor, Problem
+from .models import Company, Discussion, Professor, Problem, Solution
 
 problems = [
     {
@@ -17,8 +17,18 @@ problems = [
 ]
 
 # Create your views here.
-def detail(request, course_id, slug):
-    return HttpResponseNotFound('<h1>Page not created yet</h1>')
+def detail(request, course_id):
+    p = get_object_or_404(Problem, pk=course_id)
+    # get all discussions for the problem
+    discussions = Discussion.objects.filter(problem__pk=course_id)
+    # get all solutions for the problem
+    solutions = Solution.objects.filter(problem__pk=course_id)
+    context = {
+        'problem': p,
+        'discussions': discussions,
+        'solutions': solutions,
+    }
+    return render(request, 'course/problem_page.html', context)
 
 def add_problem(request):
     return render(request, 'course/add_problem.html')
@@ -33,7 +43,6 @@ def process_add_problem(request):
         description=request.POST['problem-description'],
         company=company_obj,
         date_posted=timezone.now(),
-        course_content={}
     )
     p.save()
     return HttpResponseRedirect(reverse('course:index'))
