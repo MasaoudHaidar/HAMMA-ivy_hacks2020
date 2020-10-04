@@ -12,10 +12,10 @@
         {{ form.as_p }}
 
       </fieldset>
-      <button type="submit">Sign Up</button>
+      <button type="submit">Sign In</button>
     </form>
 
-    Already Have An Account? <a href="{% url 'users:login' %}">Sign In</a>
+    Don't Have An Account? <a href="{% url 'users:signup' %}">Sign Up</a>
 
   </div>
 {% endblock content %}

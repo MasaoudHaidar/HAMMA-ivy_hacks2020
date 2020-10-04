@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>W3.CSS Template</title>
+<title>HAMMA</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -85,11 +85,18 @@
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    <a class="w3-bar-item w3-theme-l1">Our name</a>
+    <a class="w3-bar-item w3-theme-l1">HAMMA</a>
     <a href="{% url 'course:index' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Home</a>
     <a href="{% url 'course:add_problem' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add A Problem</a>
     {# <a href="About.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a> #}
-   <a href="{% url 'contact:index' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>
+    <a href="{% url 'contact:index' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'users:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Logout</a>
+    {% else %}
+      <a href="{% url 'users:login' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
+      <a href="{% url 'users:signup' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register</a>
+    {% endif %}
+
   </div>
 </div>
 
@@ -110,6 +117,11 @@
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
 <div class="w3-main" style="margin-left:250px">
 
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }} <!-- TODO: make this message look better -->
+    {% endfor %}
+  {% endif %}
   {% block content %}{% endblock %}
 
   <footer id="myFooter">
