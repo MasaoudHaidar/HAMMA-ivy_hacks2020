@@ -50,7 +50,7 @@ class Solution(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
-    video_url = models.URLField()
+    video_url = models.URLField(null=True)
     solution_text = models.TextField()
 
 class Discussion(models.Model):
