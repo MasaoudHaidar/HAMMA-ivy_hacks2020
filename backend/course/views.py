@@ -36,7 +36,6 @@ def add_problem(request):
 
 def process_add_problem(request):
     # get company or create a new one
-    print(request)
     company_obj, _ = Company.objects.get_or_create(full_name__iexact=request.POST['company-name'])
     p = Problem(
         title=request.POST['problem-title'],
@@ -46,6 +45,12 @@ def process_add_problem(request):
     )
     p.save()
     return HttpResponseRedirect(reverse('course:index'))
+
+def process_add_comment(request, course_id):
+    pass
+
+def process_add_solution(request, course_id):
+    pass
 
 def index(request):
     context = {
