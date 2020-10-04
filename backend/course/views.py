@@ -34,9 +34,9 @@ def detail(request, course_id):
 
 @login_required
 def add_problem(request):
-    if request.method == 'POST':
-        company_set = Company.objects.filter(user=request.user)
-        if company_set.exists():
+    company_set = Company.objects.filter(user=request.user)
+    if company_set.exists():
+        if request.method == 'POST':
             p = Problem(
                 title=request.POST['problem-title'],
                 description=request.POST['problem-description'],
@@ -45,8 +45,10 @@ def add_problem(request):
             )
             p.save()
             return HttpResponseRedirect(reverse('course:index'))
+        else:
+            return render(request, 'course/add_problem.html')
     else:
-        return render(request, 'course/add_problem.html')
+        return HttpResponseRedirect(reverse('course:index'))
 
 def process_add_comment(request, problem_id):
     p = get_object_or_404(Problem, pk=problem_id)
