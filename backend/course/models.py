@@ -18,6 +18,12 @@ class Company(models.Model):
     def __str__(self):
         return self.full_name
 
+class Student(models.Model):
+    full_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.full_name
+
 class Problem(models.Model):
     title = models.CharField(max_length=10000)
     description = models.CharField(max_length=10000)
@@ -25,13 +31,7 @@ class Problem(models.Model):
         'Company',
         on_delete=models.CASCADE,
     )
-    professor = models.ForeignKey(
-        'Professor',
-        on_delete=models.SET_NULL,
-        null=True,
-    )
     date_posted = models.DateTimeField()
-    date_solved = models.DateTimeField(null=True)
     # course_content contains all the course content of a problem
     # the JSON is a list of basic elements that includes type and data
     # sample content: {[
@@ -40,4 +40,20 @@ class Problem(models.Model):
     #     {"type": "text", "content": "Here is another piece of text"},
     #     {"type": "image", "url": "https://example.com/link_to_image"}
     # ]}
-    course_content = models.JSONField()
+    # course_content = models.JSONField()
+
+class Solution(models.Model):
+    date_solved = models.DateTimeField()
+    problem = models.ForeignKey('Problem', on_delete=models.CASCADE)
+    professor = models.ForeignKey(
+        'Professor',
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    video_url = models.URLField()
+    solution_text = models.TextField()
+
+class Discussion(models.Model):
+    problem = models.ForeignKey('Problem', on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    comment = models.TextField()
