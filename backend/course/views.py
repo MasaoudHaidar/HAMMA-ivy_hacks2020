@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import *
+from .models import Problem, Discussion, Solution
 from users.models import Company, Student, Professor
 
 problems = [
@@ -28,6 +28,7 @@ def detail(request, course_id):
     context = {
         'problem': p,
         'discussions': discussions,
+        # 'show_discussions': show_discussions,
         'solutions': solutions,
     }
     if request.user.is_authenticated:
@@ -60,13 +61,9 @@ def add_problem(request):
 
 def process_add_comment(request, problem_id):
     p = get_object_or_404(Problem, pk=problem_id)
-    student_obj, student_created = Student.objects.get_or_create(full_name__iexact='Student') # TODO: link login page with student full_name
-    if student_created:
-        student_obj.full_name = 'Student'
-        student_obj.save()
     d = Discussion(
         problem=p,
-        student=student_obj,
+        student=request.user.student,
         comment=request.POST['comment']
     )
     d.save()
@@ -74,14 +71,10 @@ def process_add_comment(request, problem_id):
 
 def process_add_solution(request, problem_id):
     p = get_object_or_404(Problem, pk=problem_id)
-    professor_obj, professor_created = Professor.objects.get_or_create(full_name__iexact='Professor') # TODO: link login page with professor full_name
-    if professor_created:
-        professor_obj.full_name = 'Professor'
-        professor_obj.save()
     s = Solution(
         problem=p,
         date_solved=timezone.now(),
-        professor=professor_obj,
+        professor=request.user.professor,
         video_url=request.POST['solution-video'],
         solution_text=request.POST['solution-text'],
     )
