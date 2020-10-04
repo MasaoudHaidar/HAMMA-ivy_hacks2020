@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Company, Discussion, Professor, Problem, Solution
+from .models import Company, Discussion, Professor, Problem, Solution, Student
 
 problems = [
     {
@@ -36,7 +36,10 @@ def add_problem(request):
 
 def process_add_problem(request):
     # get company or create a new one
-    company_obj, _ = Company.objects.get_or_create(full_name__iexact=request.POST['company-name'])
+    company_obj, company_created = Company.objects.get_or_create(full_name__iexact=request.POST['company-name'])
+    if company_created:
+        company_obj.full_name = request.POST['company-name']
+        company_obj.save()
     p = Problem(
         title=request.POST['problem-title'],
         description=request.POST['problem-description'],
@@ -46,11 +49,35 @@ def process_add_problem(request):
     p.save()
     return HttpResponseRedirect(reverse('course:index'))
 
-def process_add_comment(request, course_id):
-    pass
+def process_add_comment(request, problem_id):
+    p = get_object_or_404(Problem, pk=problem_id)
+    student_obj, student_created = Student.objects.get_or_create(full_name__iexact='Student') # TODO: link login page with student full_name
+    if student_created:
+        student_obj.full_name = 'Student'
+        student_obj.save()
+    d = Discussion(
+        problem=p,
+        student=student_obj,
+        comment=request.POST['comment']
+    )
+    d.save()
+    return HttpResponseRedirect(reverse('course:detail', args=(problem_id, )))
 
-def process_add_solution(request, course_id):
-    pass
+def process_add_solution(request, problem_id):
+    p = get_object_or_404(Problem, pk=problem_id)
+    professor_obj, professor_created = Professor.objects.get_or_create(full_name__iexact='Professor') # TODO: link login page with professor full_name
+    if professor_created:
+        professor_obj.full_name = 'Professor'
+        professor_obj.save()
+    s = Solution(
+        problem=p,
+        date_solved=timezone.now(),
+        professor=professor_obj,
+        video_url=request.POST['solution-video'],
+        solution_text=request.POST['solution-text'],
+    )
+    s.save()
+    return HttpResponseRedirect(reverse('course:detail', args=(problem_id, )))
 
 def index(request):
     context = {
